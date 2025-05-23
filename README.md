@@ -4,13 +4,13 @@
 docker compose up -d
 ```
 
-## Development pasos
+## Development Steps
 
-1. Clonar el proyecto
-2. Crear un archivo `.env` basado en el archivo `.env.template`
-3. Levantar la base de datos con `docker compose up -d`
-4. Levantar el servidor de NATS
+1. Clone the project
+2. Create a `.env` file based on the `.env.template` file
+3. Start the database with `docker compose up -d`
+4. Start the NATS server
 ```
 docker run -d --name nats-server -p 4222:4222 -p 8222:8222 nats
 ```
-5. Levantar el proyecto con `npm run start:dev`
+5. Start the project with `npm run start:dev`

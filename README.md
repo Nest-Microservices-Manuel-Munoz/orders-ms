@@ -1,4 +1,4 @@
-# Orders MicroService
+# Orders MicroService - with nats
 
 ```
 docker compose up -d

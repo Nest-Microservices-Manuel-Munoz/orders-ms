@@ -66,7 +66,7 @@ export class OrdersService extends PrismaClient implements OnModuleInit {
         data: {
           totalAmount: totalAmount,
           totalItems: totalItems,
-          OrderItems: {
+          OrderItem: {
             createMany: {
               data: createOrderDto.items.map((orderItem) => {
                 const product = products.find(
@@ -82,7 +82,7 @@ export class OrdersService extends PrismaClient implements OnModuleInit {
           },
         },
         include: {
-          OrderItems: {
+          OrderItem: {
             select: {
               productId: true,
               quantity: true,
@@ -94,7 +94,7 @@ export class OrdersService extends PrismaClient implements OnModuleInit {
 
       return {
         ...order,
-        OrderItems: order.OrderItems.map((orderItem) => ({
+        OrderItem: order.OrderItem.map((orderItem) => ({
           ...orderItem,
           name: products.find((product) => product.id === orderItem.productId)
             ?.name,
@@ -149,7 +149,7 @@ export class OrdersService extends PrismaClient implements OnModuleInit {
     const order = await this.order.findUnique({
       where: { id },
       include: {
-        OrderItems: {
+        OrderItem: {
           select: {
             productId: true,
             quantity: true,
@@ -167,7 +167,7 @@ export class OrdersService extends PrismaClient implements OnModuleInit {
     }
 
     // Validate products ids
-    const productsIds = order.OrderItems.map(
+    const productsIds = order.OrderItem.map(
       (orderItem) => orderItem.productId,
     );
     const products = await firstValueFrom<Products[]>(
@@ -176,7 +176,7 @@ export class OrdersService extends PrismaClient implements OnModuleInit {
 
     return {
       ...order,
-      OrderItems: order.OrderItems.map((orderItem) => ({
+      OrderItem: order.OrderItem.map((orderItem) => ({
         ...orderItem,
         name: products.find((product) => product.id === orderItem.productId)
           ?.name,
@@ -213,7 +213,7 @@ export class OrdersService extends PrismaClient implements OnModuleInit {
       this.natClient.send('create.payment.session', {
         orderId: order.id,
         currency: 'usd',
-        items: order.OrderItems.map((item) => ({
+        items: order.OrderItem.map((item) => ({
           name: item.name,
           price: item.price,
           quantity: item.quantity,

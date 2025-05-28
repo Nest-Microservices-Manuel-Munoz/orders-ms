@@ -1,7 +1,7 @@
 import { OrderStatus } from 'generated/prisma';
 
 export interface OrderWithProducts {
-  OrderItems: {
+  OrderItem: {
     name: string | undefined;
     productId: number;
     quantity: number;
